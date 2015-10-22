@@ -1,0 +1,26 @@
+frontend=0.0.0.0,1443
+backend=127.0.0.1,3128
+private-key-file=/etc/nginx/certs/www.example.com.key
+certificate-file=/etc/nginx/certs/www.example.com.crt
+http2-proxy=yes
+
+# set worker，adjust to CPU
+workers=1
+
+# enable client TLS auth
+#verify-client=yes
+#verify-client-cacert=/path/to/client/ca
+
+# not add X-Forwarded-For header
+add-x-forwarded-for=no
+# not add Via header
+no-via=yes
+# not use OCSP server
+no-ocsp=yes
+# set NPN / ALPN order
+npn-list=spdy/3.1,h2
+# only use TLS 1.2
+tls-proto-list=TLSv1.2
+# enable log
+accesslog-file=/var/log/nghttpx/access.log
+accesslog-format=$remote_addr [$time_iso8601] "$request" $status $body_bytes_sent $alpn "$http_user_agent"

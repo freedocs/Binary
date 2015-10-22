@@ -1,0 +1,22 @@
+http_port 127.0.0.1:3128
+#http_access allow localhost
+
+# disable cache and log
+cache deny all
+access_log none
+
+# prefer ipv4
+dns_v4_first on
+# no Via header
+via off
+# delete X-Forwarded-For header
+forwarded_for delete
+
+# http auth
+auth_param basic program /usr/lib/squid3/basic_ncsa_auth /etc/squid3/password
+auth_param basic realm login
+auth_param basic casesensitive on
+auth_param basic credentialsttl 2 hours
+auth_param basic children 5
+acl authenticated proxy_auth REQUIRED
+http_access allow authenticated
